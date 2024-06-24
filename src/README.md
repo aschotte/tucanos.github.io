@@ -1,3 +1,3 @@
 # `tucanos` and `pytucanos`
 
-![Tucanos](images/tucanos.svg)
+![Tucanos](images/tucano.svg)
