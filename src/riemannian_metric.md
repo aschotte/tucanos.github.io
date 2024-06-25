@@ -30,7 +30,32 @@ $$\mathcal C(\mathcal M) = \int_\Omega \sqrt{\det(\mathcal M)} dx$$
 
 ## Discrete metric field
 
-In the context of remeshing, only a discrete metric field is known. A metric $\mathcal M_i$ is defined at each vertex $\mathbf x_i$ of the input mesh. In order to compute the length of an edge $\mathbf e_{i,j} = \mathbf x_j - \mathbf x_i$, a geometric variation of the local size along the edge is assumed leading to:
+In the context of remeshing, only a discrete metric field is known. A metric $\mathcal M_i$ is defined at each vertex $\mathbf x_i$ of the input mesh. 
+
+
+### Metric interpolation 
+
+![log interpolation](images/log_interp.svg)
+
+Logarithmic interpolation is used to interpolate between metrics:
+$$ \mathcal M(t) = \exp\{(1 - t)  \log(\mathcal M_0) + t \log(\mathcal M_1)\}$$
+as it verifies a maximum principle, i.e. if $\det(\mathcal M_0) \le \det(\mathcal M_1)$ then $\det(\mathcal M_0) \le \det(\mathcal M(t)) \le \det(\mathcal M_1)$ for $0 \le t \le 1$
+
+When interpolating a discrete metric field at $\mathbf x = \sum \alpha_i \mathbf x_i$ is approximated as
+$$ \mathcal M(\mathbf x) = \exp\left(\sum \alpha_i \log(\mathcal M_i)\right)$$
+which is consistent with the assumption of geometric progression of sizes.
+
+### Why not linear interpolation?
+
+![linear interpolation](images/linear_interp.svg) 
+
+Linear interpolation between $\mathcal M_0$ and $\mathcal M_1$ is given by
+$$ \mathcal M(t) = (1 - t)  \mathcal M_0 + t \mathcal M_1$$
+and does not respect the maximum principle:
+
+### Edge length in metric space
+
+In order to compute the length of an edge $\mathbf e_{i,j} = \mathbf x_j - \mathbf x_i$, logarithmic interpolation is considered along the edge leading to:
 $$  l_\mathcal M(e_{i,j}) = l_i \frac{a - 1} { a \ln(a)} $$ 
 with $l_k = \sqrt{e_{i,j}^T \mathcal M_k e_{i,j}}$ and $a = l_j / l_i$.
 
